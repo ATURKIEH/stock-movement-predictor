@@ -8,7 +8,12 @@ class SentimentAnalyzer:
         self.analyzer = pipeline("sentiment-analysis", model = "ProsusAI/finbert")
 
     def analyze_sentiment(self, news_headline):
-        if news_headline is None or news_headline.strip() == "":
+        if not news_headline or len(news_headline) == 0:
+            return {"label": "neutral", "score": 0.0}
+        
+        headlines = [h for h in news_headline if h and h.strip() != ""]
+    
+        if not headlines:
             return {"label": "neutral", "score": 0.0}
         results = self.analyzer(news_headline, truncation=True, max_length=512)
         scores = []
@@ -20,7 +25,8 @@ class SentimentAnalyzer:
             else:
                 scores.append(0.0)
 
-        avg_score = sum(scores) / len(scores)
+        avg_score = sum(scores) / len(scores)\
+
 
         if avg_score > 0.1:
             sentiment = "positive"

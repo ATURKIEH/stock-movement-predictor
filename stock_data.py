@@ -39,13 +39,14 @@ class StockData:
         headlines = []
         for item in news:
             try:
-                title = item.get['content']['title']
-                if not re.match(r'https?://', title):
+                #title = item.get('content', {}).get('title')
+                title = item['content']['title']
+                if title and not re.match(r'https?://', title):
                     headlines.append(title)
             except:
                 continue
+        print(headlines)
         self.news = headlines
-        return news
-    
-    
+        
+        return self.news
         
