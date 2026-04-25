@@ -30,6 +30,16 @@ class StockData:
         df['RSI'] = ta.momentum.rsi(df['Close'], window =14)
         #MACD
         df['MACD'] = ta.trend.MACD(df['Close']).macd()
+
+        #stochastic rsi
+        df['StochRSI'] = ta.momentum.stochrsi(df['Close'], window=14)
+        #bollinger bands
+        df['BB_High'] = ta.volatility.bollinger_hband(df['Close'], window=20)
+        df['BB_Low'] = ta.volatility.bollinger_lband(df['Close'], window=20)
+
+        #volume ma
+        df['Vol_MA7'] = df['Volume'].rolling(window=7).mean()
+        df['Vol_MA30'] = df['Volume'].rolling(window=30).mean()
         self.data = df.dropna()
         return self.data
 
