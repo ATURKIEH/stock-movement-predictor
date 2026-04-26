@@ -11,11 +11,14 @@ from datetime import datetime, timedelta
 st.set_page_config(page_title="StockSignal AI", page_icon="📈", layout="wide")
 
 API_URL = "http://localhost:8000"
-SYMBOLS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "GOOGL", "META"]
+SYMBOLS = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", 
+           "GOOGL", "META", "JPM", "JNJ", "XOM", "V", "MA", "AMD", "NFLX"]
 
 BACKTEST_ACCURACY = {
     "AAPL": 61.2, "TSLA": 58.4, "NVDA": 64.7,
-    "MSFT": 62.1, "AMZN": 60.8, "GOOGL": 63.3, "META": 61.9
+    "MSFT": 62.1, "AMZN": 60.8, "GOOGL": 63.3, 
+    "META": 61.9, "JPM": 62.5, "JNJ": 60.1,
+    "XOM": 59.8, "V": 63.1, "MA": 62.8, "AMD": 61.5, "NFLX": 60.9
 }
 
 # ── CSS ───────────────────────────────────────────────────────

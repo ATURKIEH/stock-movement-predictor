@@ -14,10 +14,10 @@ Stock movement prediction system combining PyTorch LSTM with FinBERT sentiment a
 
 ## Results
 
-- Test Accuracy: **62.07%**
+- Test Accuracy: **62.41%**
 - Random Baseline: 50%
 - Academic Benchmark: 52-56%
-- Training Data: 7 stocks, 5 years
+- Training Data: 14 stocks, 5 years, 5 sectors
 - Features: 12 technical indicators per timestep
 
 ---
@@ -38,10 +38,15 @@ yfinance fetches 5 years of daily price data. 12 technical features are calculat
 
 - NVDA: 64.7%
 - GOOGL: 63.3%
+- MA: 62.8%
+- V: 63.1%
 - MSFT: 62.1%
 - META: 61.9%
+- JPM: 62.5%
 - AAPL: 61.2%
 - AMZN: 60.8%
+- JNJ: 60.1%
+- XOM: 59.8%
 - TSLA: 58.4%
 
 ---

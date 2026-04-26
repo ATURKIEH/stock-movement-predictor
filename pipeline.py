@@ -16,7 +16,8 @@ import joblib
 import json
 
 def main():
-    symbols = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", "GOOGL", "META"]
+    symbols = ["AAPL", "TSLA", "NVDA", "MSFT", "AMZN", 
+           "GOOGL", "META", "JPM", "JNJ", "XOM", "V", "MA", "AMD", "NFLX"]
     all_X= []
     all_y= []
     
@@ -44,11 +45,16 @@ def main():
                 y_seq.append(y[i+sequence_length])
             return np.array(X_seq), np.array(y_seq)
         X_seq, y_seq = create_sequences(data_scaled, data['y'].values)
-        
+        print(f"{symbol}: data rows={len(data)}, sequences={len(X_seq)}")
+        if len(X_seq) < 50:
+            print(f"Skipping {symbol} due to insufficient data after sequencing.")
+            continue
         all_X.append(X_seq)
         all_y.append(y_seq)
 
-    
+    if len(all_X) == 0:
+        print("No valid data available for training.")
+        return
     X_all = np.concatenate(all_X, axis=0)
     y_all = np.concatenate(all_y, axis=0)
     #splitting data
