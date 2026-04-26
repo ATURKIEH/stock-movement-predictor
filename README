@@ -1,0 +1,125 @@
+# 📈 StockSignal AI
+
+A production-grade stock movement prediction system combining **PyTorch LSTM** neural networks with **FinBERT** sentiment analysis to forecast 5-day price direction across 7 major equities.
+
+## Results
+
+| Metric | Value |
+|--------|-------|
+| Test Accuracy | **62.07%** |
+| Random Baseline | 50% |
+| Academic Benchmark | 52-56% |
+| Training Data | 7 stocks · 5 years |
+| Features | 12 technical indicators |
+
+## Key Finding
+
+For high-volatility stocks like TSLA, the model learned that **technical indicators carry more predictive weight than news sentiment** — consistent with the *"buy the rumor, sell the news"* phenomenon observed in financial markets.
+
+## Architecture
+yfinance (5yr data)
+↓
+Technical Features (12):
+Close, Volume, MA7, MA30, RSI,
+MACD, StochRSI, BB_High, BB_Low,
+Vol_MA7, Vol_MA30
++
+FinBERT Sentiment Analysis
+(financial news headlines → score)
+↓
+MinMaxScaler normalization
+↓
+Sliding window sequences (20 days)
+↓
+PyTorch LSTM (2-layer: 64→32 units)
+↓
+Direction (up/down) + Confidence score
+
+## Model Performance By Ticker
+
+| Ticker | Accuracy |
+|--------|----------|
+| NVDA   | 64.7%    |
+| GOOGL  | 63.3%    |
+| MSFT   | 62.1%    |
+| META   | 61.9%    |
+| AAPL   | 61.2%    |
+| AMZN   | 60.8%    |
+| TSLA   | 58.4%    |
+
+## Stack
+
+- **ML:** PyTorch, Hugging Face Transformers (FinBERT), scikit-learn
+- **Data:** yfinance, ta (technical analysis)
+- **API:** FastAPI + SQLite
+- **Frontend:** Streamlit + Plotly
+- **Deployment:** Docker + docker-compose
+- **CI/CD:** GitHub Actions
+
+## Features
+
+- **Signal tab** — run prediction on any of 7 tickers with live price chart
+- **Scan All tab** — analyze all 7 tickers simultaneously
+- **History tab** — view all past predictions with distribution chart
+- **Backtest tab** — per-ticker accuracy vs random baseline and academic benchmark
+
+## Run With Docker
+
+```bash
+git clone https://github.com/ATURKIEH/stock-predictor
+cd stock-predictor
+
+# Generate model and scaler first
+python pipeline.py
+
+# Then run with Docker
+docker-compose up --build
+```
+
+- FastAPI: http://localhost:8000/docs
+- Streamlit: http://localhost:8501
+
+## Run Locally
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate      # Windows
+pip install -r requirements.txt
+pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+
+# Generate model
+python pipeline.py
+
+# Terminal 1
+uvicorn app:app --reload
+
+# Terminal 2
+streamlit run streamlit_app.py
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check |
+| POST | `/predict` | Predict direction for a ticker |
+| GET | `/predictions` | All past predictions |
+| GET | `/predictions/{ticker}` | Predictions by ticker |
+
+## Project Structure
+stock-predictor/
+├── stock_data.py      # StockData class — yfinance + technical indicators
+├── sentiment.py       # SentimentAnalyzer class — FinBERT
+├── model.py           # LSTMModel — PyTorch architecture
+├── pipeline.py        # Training pipeline — data prep, training, evaluation
+├── database.py        # Database class — SQLite
+├── app.py             # FastAPI endpoints
+├── streamlit_app.py   # Streamlit dashboard
+├── Dockerfile
+├── Dockerfile.streamlit
+├── docker-compose.yml
+└── .github/workflows/ci.yml
+
+## Disclaimer
+
+This project is for educational purposes only. Not financial advice. Past model performance does not guarantee future results.

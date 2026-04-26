@@ -25,7 +25,7 @@ class SentimentAnalyzer:
             else:
                 scores.append(0.0)
 
-        avg_score = sum(scores) / len(scores)\
+        avg_score = sum(scores) / len(scores)
 
 
         if avg_score > 0.1:

@@ -36,7 +36,7 @@ async def lifespan(app: FASTAPI.FastAPI):
     scaler = joblib.load('scaler.pkl')
 
     model = LSTMModel(input_size=12)
-    model.load_state_dict(torch.load('best_model.pt', map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load('best_model.pt', map_location=torch.device('cpu'), weights_only=True))
     model.eval()
 
     sentiment_analyzer = SentimentAnalyzer()
