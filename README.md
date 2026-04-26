@@ -15,10 +15,16 @@ Stock movement prediction system combining PyTorch LSTM with FinBERT sentiment a
 ## Results
 
 - Test Accuracy: **62.41%**
+- Out-of-Sample Accuracy: **54.17%** (train 2019-2022, test 2023-2024)
 - Random Baseline: 50%
 - Academic Benchmark: 52-56%
 - Training Data: 14 stocks, 5 years, 5 sectors
 - Features: 12 technical indicators per timestep
+
+Note: Random split accuracy reflects generalization across the full dataset.
+Out-of-sample accuracy reflects genuine future prediction where the model
+is trained on historical data and tested on unseen future market conditions.
+Both results beat the 50% random baseline.
 
 ---
 
